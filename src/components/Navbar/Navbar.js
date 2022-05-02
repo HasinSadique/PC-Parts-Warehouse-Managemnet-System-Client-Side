@@ -4,7 +4,7 @@ import { MenuIcon, XIcon } from "@heroicons/react/solid";
 const Navbar = () => {
   const [open, setOpen] = useState(false);
   return (
-    <div className=" bg-transparent p-3 text-white ">
+    <div className=" bg-transparent p-3 text-white border-b-2 border-slate-700">
       <div className="flex">
         {/* menu button for small device */}
         <div
@@ -34,17 +34,15 @@ const Navbar = () => {
               </a>
             </li>
             <li className="hover:bg-orange-500 lg:hover:text-orange-400 lg:hover:scale-110 lg:transition ease-out delay-100 lg:h-0 h-10">
-              <a className=" text-center" href="/add-course">
-                Add Course
+              <a className=" text-center" href="/add-items">
+                Add Items
               </a>
             </li>
             <li className="hover:bg-orange-500 lg:hover:text-orange-400 lg:hover:scale-110 lg:transition ease-out delay-100 lg:h-0 h-10">
-              <a href="/course-settings">
-                Set Equivalent / Prerequisite Courses
-              </a>
+              <a href="/inventory-list">Inventory List</a>
             </li>
             <li className="hover:bg-orange-500 lg:hover:text-orange-400 lg:hover:scale-110 lg:transition ease-out delay-100 lg:h-0 h-10">
-              <a href="/set-curriculumn"> Set Curriculum </a>
+              <a href="/blog"> Blog </a>
             </li>
           </ul>
         </div>
