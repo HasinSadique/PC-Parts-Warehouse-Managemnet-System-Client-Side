@@ -39,7 +39,7 @@ const Navbar = () => {
               </a>
             </li>
             <li className="hover:bg-orange-500 lg:hover:text-orange-400 lg:hover:scale-110 lg:transition ease-out delay-100 lg:h-0 h-10">
-              <a href="/inventory-list">Inventory List</a>
+              <a href="/inventory">Inventory List</a>
             </li>
             <li className="hover:bg-orange-500 lg:hover:text-orange-400 lg:hover:scale-110 lg:transition ease-out delay-100 lg:h-0 h-10">
               <a href="/blog"> Blog </a>
@@ -63,7 +63,7 @@ const Navbar = () => {
                 d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z"
               />
             </svg>
-            <a className=" my-auto mx-5" href="">
+            <a className=" my-auto mx-5" href="/signin">
               Sign in
             </a>
           </div>

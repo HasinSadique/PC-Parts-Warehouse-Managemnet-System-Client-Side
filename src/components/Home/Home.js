@@ -27,7 +27,7 @@ const Home = () => {
         Inventory Items
       </h3>
       <div className="grid lg:grid-cols-2 gap-20 grid-cols-1 lg:mb-40 my-20 lg:mx-20 mx-10">
-        {items.map((item) => (
+        {items.slice(0, 6).map((item) => (
           <ItemCard key={item._id} item={item}></ItemCard>
         ))}
       </div>
