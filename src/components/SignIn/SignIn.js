@@ -2,8 +2,8 @@ import React from "react";
 
 const SignIn = () => {
   return (
-    <div className="py-20">
-      <div className="w-3/4 lg:w-1/2 mx-auto bg-slate-700 py-5 px-10 rounded-2xl">
+    <div className="py-36">
+      <div className="w-3/4 lg:w-1/2 mx-auto bg-slate-800 py-5 px-10 rounded-2xl">
         <h1 className="text-white font-semibold text-xl text-center mb-10">
           Login using email and password
         </h1>
