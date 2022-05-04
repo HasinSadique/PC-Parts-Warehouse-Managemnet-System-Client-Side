@@ -1,0 +1,9 @@
+@media (max-width: 768px) {
+    #ItemImage {
+        margin: auto;
+        margin-bottom: 20px;
+    }
+    #add-item-form {
+        padding: 15px;
+    }
+}

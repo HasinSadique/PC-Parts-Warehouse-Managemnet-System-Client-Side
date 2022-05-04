@@ -1,22 +1,64 @@
-import React from "react";
+import React, { useState } from "react";
+import {
+  useAuthState,
+  useSignInWithEmailAndPassword,
+  useSignInWithGoogle,
+} from "react-firebase-hooks/auth";
+import app from "../../firebase.init";
+import { getAuth } from "firebase/auth";
+import { Navigate, useLocation, useNavigate } from "react-router";
 
 const SignIn = () => {
+  const [signInWithGoogle, userGoogle] = useSignInWithGoogle(getAuth(app));
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const [userLoggedIn] = useAuthState(getAuth(app));
+
+  const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
+
+  const handleEmailBlur = (event) => {
+    setEmail(event.target.value);
+  };
+  const handlePasswordlBlur = (event) => {
+    setPassword(event.target.value);
+  };
+
+  const [signInWithEmailAndPassword, user, loading, error] =
+    useSignInWithEmailAndPassword(getAuth(app));
+
+  const handleUserSignIn = (event) => {
+    event.preventDefault();
+    signInWithEmailAndPassword(email, password);
+    event.target.reset();
+  };
+
+  if (userGoogle || user) {
+    navigate(from, { replace: true });
+  }
+
   return (
     <div className="py-36">
       <div className="w-3/4 lg:w-1/2 mx-auto bg-slate-800 py-5 px-10 rounded-2xl">
         <h1 className="text-white font-semibold text-xl text-center mb-10">
           Login using email and password
         </h1>
-        <form className="">
+        <form onSubmit={handleUserSignIn} className="">
           <input
+            onBlur={handleEmailBlur}
             className="block rounded-lg mx-auto mb-3 w-full px-2"
             type="Email"
             placeholder="Email"
+            required
           />
           <input
+            onBlur={handlePasswordlBlur}
             className="block rounded-lg mx-auto mb-6 w-full px-2"
             type="Password"
             placeholder="Password"
+            required
           />
           <input
             className="block mx-auto rounded-xl text-white bg-orange-500 px-8 py-1"
@@ -35,11 +77,13 @@ const SignIn = () => {
       <div className="">
         <hr className=" mt-6 border-gray-200 w-3/4 mx-auto dark:border-gray-700" />
         <h1 className="text-white text-center my-5">Or, Sign in with </h1>
-        <button className=" hover:bg-slate-100 hover:scale-105 mx-auto px-4 py-1 font-semibold rounded-2xl flex gap-3 bg-white">
+        <button
+          onClick={() => signInWithGoogle()}
+          className=" hover:bg-slate-100 hover:scale-105 mx-auto px-4 py-1 font-semibold rounded-2xl flex gap-3 bg-white"
+        >
           <img
             className="w-6 h-6"
             src="https://www.freepnglogos.com/uploads/google-logo-png/google-logo-png-suite-everything-you-need-know-about-google-newest-0.png"
-            alt=""
           />
           Google Sign In
         </button>

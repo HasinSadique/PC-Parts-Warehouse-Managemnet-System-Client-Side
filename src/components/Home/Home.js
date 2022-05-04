@@ -23,20 +23,21 @@ const Home = () => {
         />
       </div>
       {/* Inventory Items */}
-      <h3 className=" text-center text-3xl font-semibold mt-40 text-white">
+      <h3 className="lg:my-32 my-20 text-center text-3xl font-semibold text-white">
         Inventory Items
       </h3>
-      <div className="grid lg:grid-cols-2 gap-20 grid-cols-1 lg:mb-40 my-20 lg:mx-20 mx-10">
+      <div className="grid lg:grid-cols-2 gap-20 grid-cols-1  lg:mx-20 mx-10">
         {items.slice(0, 6).map((item) => (
           <ItemCard key={item._id} item={item}></ItemCard>
         ))}
       </div>
+      <hr className="my-20 lg:mx-20 mx-10 border-gray-200 dark:border-gray-700" />
       {/* PC-build Youtube Video */}
       <h3 className="text-center text-3xl font-medium text-white ">
         PC Build Video Tutorial
       </h3>
       <iframe
-        className="mx-auto my-10"
+        className="w-3/4 mx-auto my-10"
         width="914"
         height="514"
         src="https://www.youtube.com/embed/gO-V8E9MIBg"

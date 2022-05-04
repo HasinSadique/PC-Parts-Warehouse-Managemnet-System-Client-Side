@@ -1,10 +1,13 @@
 import React from "react";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { getAuth } from "firebase/auth";
+import app from "../../firebase.init";
 
 const ItemCard = (props) => {
   const { imageUrl, itemName, supplierName, itemPrice, description, quantity } =
     props.item;
 
-  // console.log(itemName);
+  const [user] = useAuthState(getAuth(app));
   return (
     <div className="p-3 lg:flex bg-slate-200 rounded-3xl">
       <img
@@ -23,7 +26,13 @@ const ItemCard = (props) => {
         <h1 className="font-bold text-xl mb-5">
           Quantity: {quantity} pieces in stock.
         </h1>
-        <button className="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 mb-5 mx-auto rounded">
+        <button
+          className={`${
+            user
+              ? "bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 mb-5 mx-auto rounded"
+              : "hidden "
+          }`}
+        >
           Update Stock
         </button>
       </div>
