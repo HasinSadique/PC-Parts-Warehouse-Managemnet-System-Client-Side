@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import { MenuIcon, XIcon } from "@heroicons/react/solid";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { getAuth, signOut } from "firebase/auth";
-import app from "../../firebase.init";
+import { signOut } from "firebase/auth";
+import auth from "../../firebase.init";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
 
-  const [user] = useAuthState(getAuth(app));
+  const [user] = useAuthState(auth);
 
   return (
     <div className=" bg-transparent p-3 text-white border-b-2 border-slate-700">
@@ -86,10 +86,7 @@ const Navbar = () => {
                   />
                 </svg>
               )}
-              <button
-                onClick={() => signOut(getAuth(app))}
-                className=" my-auto mx-5"
-              >
+              <button onClick={() => signOut(auth)} className=" my-auto mx-5">
                 Sign out
               </button>
             </div>

@@ -1,13 +1,12 @@
 import React from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { getAuth } from "firebase/auth";
-import app from "../../firebase.init";
+import auth from "../../firebase.init";
 
 const ItemCard = (props) => {
   const { imageUrl, itemName, supplierName, itemPrice, description, quantity } =
     props.item;
 
-  const [user] = useAuthState(getAuth(app));
+  const [user] = useAuthState(auth);
   return (
     <div className="p-3 lg:flex bg-slate-200 rounded-3xl">
       <img
@@ -16,15 +15,16 @@ const ItemCard = (props) => {
         alt=""
       />
       <div className="pl-5">
-        <h1 className="font-semibold mt-2   ">{itemName}</h1>
+        <h1 className="font-semibold mt-2   "> {itemName} </h1>
         <h5 className="text-sm "> Supplier: {supplierName} </h5>
         <h6 className="mt-7 font-semibold"> Key Features </h6>
-        <h5>{description}</h5>
+        <h5> {description} </h5>
         <h1 className="text-3xl font-bold mt-5">
           Price: {itemPrice} <span className="font-bold"> ৳ </span>
         </h1>
         <h1 className="font-bold text-xl mb-5">
-          Quantity: {quantity} pieces in stock.
+          Quantity: {quantity}
+          pieces in stock.
         </h1>
         <button
           className={`${

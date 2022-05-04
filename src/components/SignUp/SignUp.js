@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import { getAuth, verifyBeforeUpdateEmail } from "@firebase/auth";
+import { verifyBeforeUpdateEmail } from "@firebase/auth";
 import {
   useCreateUserWithEmailAndPassword,
   useSendEmailVerification,
 } from "react-firebase-hooks/auth";
-import app from "../../firebase.init";
+import auth from "../../firebase.init";
 
 const SignUp = () => {
   const [email, setEmail] = useState("");
@@ -13,7 +13,7 @@ const SignUp = () => {
   const [error, setError] = useState("");
 
   const [createUserWithEmailAndPassword, user, sendEmailVerification] =
-    useCreateUserWithEmailAndPassword(getAuth(app));
+    useCreateUserWithEmailAndPassword(auth);
 
   const handleEmailBlur = (event) => {
     setEmail(event.target.value);
@@ -38,8 +38,8 @@ const SignUp = () => {
     <div className="py-32">
       <div className=" w-3/4 lg:w-1/2 mx-auto bg-slate-800 py-5 px-10 rounded-2xl">
         <h1 className="text-white font-semibold text-xl text-center mb-10">
-          Sign up using email and password
-        </h1>
+          Sign up using email and password{" "}
+        </h1>{" "}
         <form onSubmit={handleSignUplick} className="">
           <input
             onBlur={handleEmailBlur}
@@ -67,15 +67,14 @@ const SignUp = () => {
             type="submit"
             value="Sign Up"
           />
-
           <p className="text-white text-center mt-5 mb-2">
-            Already an employee?{" "}
+            Already an employee ?{" "}
             <a className="hover:text-orange-500" href="/signin">
-              Sign In
-            </a>
-          </p>
-        </form>
-      </div>
+              Sign In{" "}
+            </a>{" "}
+          </p>{" "}
+        </form>{" "}
+      </div>{" "}
     </div>
   );
 };
