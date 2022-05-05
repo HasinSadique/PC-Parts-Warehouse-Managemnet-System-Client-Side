@@ -6,7 +6,6 @@ import auth from "../../firebase.init";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
-
   const [user] = useAuthState(auth);
 
   return (
