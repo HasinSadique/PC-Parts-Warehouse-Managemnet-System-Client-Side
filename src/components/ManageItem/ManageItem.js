@@ -11,7 +11,7 @@ const ManageItem = () => {
   }
 
   useEffect(() => {
-    const url = `http://localhost:5000/getItems/${itemId}`;
+    const url = `https://pc-warehouse-management-site.web.app/getItems/${itemId}`;
     fetch(url)
       .then((res) => res.json())
       .then((data) => setItem(data));
