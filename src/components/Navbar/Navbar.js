@@ -52,7 +52,7 @@ const Navbar = () => {
                 user ? "" : "hidden"
               } hover:bg-orange-500 lg:hover:text-orange-400 lg:hover:scale-110 lg:transition ease-out delay-100 lg:h-0 h-10`}
             >
-              <a href="/inventory">Inventory List</a>
+              <a href="/inventory">Manage Inventory</a>
             </li>
             <li className="hover:bg-orange-500 lg:hover:text-orange-400 lg:hover:scale-110 lg:transition ease-out delay-100 lg:h-0 h-10">
               <a href="/blog"> Blog </a>

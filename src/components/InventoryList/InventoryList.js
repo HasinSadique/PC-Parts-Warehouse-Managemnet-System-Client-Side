@@ -5,15 +5,21 @@ const InventoryList = () => {
   const [items, setItems] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:5000/getItems")
+    fetch("https://warehouse-management-site.herokuapp.com/getItems")
       .then((res) => res.json())
       .then((data) => setItems(data));
   }, []);
   return (
-    <div className="p-20 grid lg:grid-cols-2 grid-cols-1 gap-20 mx-auto">
-      {items.map((item) => (
-        <ItemCard className="" key={item._id} item={item}></ItemCard>
-      ))}
+    <div className="">
+      <h1 className="text-center text-white text-4xl mt-5 underline font-semibold font-serif">
+        Inventory
+      </h1>
+
+      <div className="p-20 grid lg:grid-cols-2 grid-cols-1 gap-20 mx-auto">
+        {items.map((item) => (
+          <ItemCard className="" key={item._id} item={item}></ItemCard>
+        ))}
+      </div>
     </div>
   );
 };

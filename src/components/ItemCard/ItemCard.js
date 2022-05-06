@@ -38,48 +38,28 @@ const ItemCard = ({ item }) => {
         <h1 className="font-semibold mt-2   "> {itemName} </h1>
         <h5 className="text-sm "> Supplier: {supplierName} </h5>
         <h6 className="mt-7 font-semibold"> Key Features </h6>
-        <h5> {description} </h5>
+        <h5 className="text-justify"> {description} </h5>
         <h1 className="text-3xl font-bold mt-5">
           Price: {itemPrice} <span className="font-bold"> ৳ </span>
         </h1>
         <h1 className="font-bold text-xl mb-5">
           Quantity: {quantity} pieces in stock.
         </h1>
-
-        <div className="grid grid-cols-2 gap-6 p-7">
+        <div className="grid grid-cols-2 gap-2">
           <button
             onClick={() => navigateToManageStock(_id)}
             className={`${
               user
-                ? "bg-red-600 hover:bg-red-800 text-white font-bold rounded py-1"
+                ? "bg-red-600 hover:bg-red-800 text-white font-bold rounded w-full mb-5 py-2 px-5"
                 : "hidden "
             }`}
           >
-            Update Stock
+            Manage Stock
           </button>
           <button
             className={`${
               user
-                ? "bg-orange-500 hover:bg-orange-700 text-white font-bold rounded py-1"
-                : "hidden "
-            }  `}
-          >
-            Delivered
-          </button>
-          <button
-            className={`${
-              user
-                ? "bg-orange-500 hover:bg-orange-700 text-white font-bold rounded py-1"
-                : "hidden "
-            } ${showDeleteBtn ? "" : "hidden"} `}
-          >
-            Edit Item Details
-          </button>
-
-          <button
-            className={`${
-              user
-                ? "bg-red-600 hover:bg-red-700 text-white font-bold rounded py-1"
+                ? "bg-red-600 hover:bg-red-800 text-white font-bold rounded w-full mb-5 py-2 px-5"
                 : "hidden "
             } ${showDeleteBtn ? "" : "hidden"} `}
           >

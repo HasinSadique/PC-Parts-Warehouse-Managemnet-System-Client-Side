@@ -22,7 +22,7 @@ const ManageItem = () => {
       <div className="text-white lg:w-1/2 mx-auto bg-slate-700 lg:rounded-3xl lg:my-10 p-10">
         <div className="flex justify-center">
           <img
-            className="lg:w-1/3 w-1/2 rounded-2xl "
+            className="lg:w-1/3 w-1/2 rounded-2xl lg:my-0 my-10 "
             src={item.imageUrl}
             alt=""
           />
@@ -35,7 +35,7 @@ const ManageItem = () => {
             <small>supplier: {item.supplierName}</small>
             <h1 className="mt-5 text-2xl">
               Price: {item.itemPrice}
-              <span className="text-xl">৳</span>
+              <span className="text-3xl">৳</span>
             </h1>
             <div className="lg:flex justify-between mt-3">
               <h1 className="text-xl lg:mb-0 mb-2">
@@ -51,7 +51,7 @@ const ManageItem = () => {
                   Out-of-Stock
                 </small>
               </h1>
-              <a className="hover:bg-orange-600 border-2 rounded-xl mr-5 my-auto px-3">
+              <a className=" cursor-pointer hover:bg-orange-600 border-2 rounded-xl mr-5 my-auto px-3">
                 Re-stock Item
               </a>
             </div>
@@ -63,7 +63,7 @@ const ManageItem = () => {
           <p className="text-justify">{item.description}</p>
           {/* Inventory Item manage buttons */}
           <div className="flex justify-around mt-10 py-5">
-            <a className="flex justify-center bg-orange-400 w-1/3 px-2 py-1 mb-3 rounded-xl">
+            <a className="cursor-pointer flex justify-center text-black font-bold bg-orange-400 hover:bg-orange-500 w-1/3 px-2 py-1 mb-3 rounded-xl">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="h-5 w-5 mr-2"
@@ -79,7 +79,7 @@ const ManageItem = () => {
               </svg>
               Edit details
             </a>
-            <a className="flex justify-center bg-orange-400 w-1/3 px-2 py-1 mb-3 rounded-xl">
+            <a className="cursor-pointer flex justify-center text-black font-bold bg-orange-400 hover:bg-orange-500 w-1/3 px-2 py-1 mb-3 rounded-xl">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="h-6 w-6 mr-2"
@@ -97,6 +97,37 @@ const ManageItem = () => {
               Delete Item
             </a>
           </div>
+          <a className="cursor-pointer flex justify-center text-black font-bold text-2xl bg-orange-400 hover:bg-orange-500 w-full px-2 py-1 mb-3 rounded-xl">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-6 w-6 mr-3 my-auto"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M13 5l7 7-7 7M5 5l7 7-7 7"
+              />
+            </svg>
+            Delivered
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-6 w-6 ml-3 my-auto"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M13 5l7 7-7 7M5 5l7 7-7 7"
+              />
+            </svg>
+          </a>
         </div>
       </div>
     </div>

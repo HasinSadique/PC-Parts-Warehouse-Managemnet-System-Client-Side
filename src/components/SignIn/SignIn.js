@@ -4,15 +4,13 @@ import {
   useSignInWithEmailAndPassword,
   useSignInWithGoogle,
 } from "react-firebase-hooks/auth";
-import { Navigate, useLocation, useNavigate } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 import auth from "../../firebase.init";
 
 const SignIn = () => {
   const [signInWithGoogle, userGoogle] = useSignInWithGoogle(auth);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
-  const [userLoggedIn] = useAuthState(auth);
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -31,6 +29,9 @@ const SignIn = () => {
   const handleUserSignIn = (event) => {
     event.preventDefault();
     signInWithEmailAndPassword(email, password);
+    // if (error) {
+    //   console.log(error.message);
+    // }
     event.target.reset();
   };
 
@@ -39,7 +40,16 @@ const SignIn = () => {
   }
 
   return (
-    <div className="py-36">
+    <div className="py-20">
+      <div>
+        <p
+          className={`${
+            error?.message ? "text-red-600 mb-10 text-center " : "hidden"
+          }`}
+        >
+          {error?.message}
+        </p>
+      </div>
       <div className="w-3/4 lg:w-1/2 mx-auto bg-slate-800 py-5 px-10 rounded-2xl">
         <h1 className="text-white font-semibold text-xl text-center mb-10">
           Login using email and password

@@ -5,15 +5,23 @@ import {
   useSendEmailVerification,
 } from "react-firebase-hooks/auth";
 import auth from "../../firebase.init";
+import { useLocation, useNavigate } from "react-router";
 
 const SignUp = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPass, setConfirmPass] = useState("");
-  const [error, setError] = useState("");
+  const [errorMSG, setErrorMSG] = useState("");
 
-  const [createUserWithEmailAndPassword, user, sendEmailVerification] =
+  const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/signin";
+
+  const [createUserWithEmailAndPassword, user, loading, error] =
     useCreateUserWithEmailAndPassword(auth);
+  // if (error) {
+  //   setErrorMSG(error.message);
+  // }
 
   const handleEmailBlur = (event) => {
     setEmail(event.target.value);
@@ -28,14 +36,27 @@ const SignUp = () => {
 
   const handleSignUplick = (event) => {
     event.preventDefault();
-    if (password != confirmPass) {
-      setError("Password mismatch.");
+    if (password == confirmPass) {
+      createUserWithEmailAndPassword(email, password);
+    } else {
+      setErrorMSG("Password mismatch.");
       return;
     }
-    createUserWithEmailAndPassword(email, password);
   };
+
+  if (user) {
+    navigate(from, { replace: true });
+  }
+
   return (
-    <div className="py-32">
+    <div className="py-20">
+      <div
+        className={`${
+          error?.message ? "text-red-500 text-center mb-10" : "hidden"
+        }`}
+      >
+        {error?.message}
+      </div>
       <div className=" w-3/4 lg:w-1/2 mx-auto bg-slate-800 py-5 px-10 rounded-2xl">
         <h1 className="text-white font-semibold text-xl text-center mb-10">
           Sign up using email and password{" "}
