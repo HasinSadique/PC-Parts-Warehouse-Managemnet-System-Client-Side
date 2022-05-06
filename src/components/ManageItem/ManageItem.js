@@ -11,7 +11,7 @@ const ManageItem = () => {
   }
 
   useEffect(() => {
-    const url = `https://pc-warehouse-management-site.web.app/getItems/${itemId}`;
+    const url = `https://warehouse-management-site.herokuapp.com/getItems/${itemId}`;
     fetch(url)
       .then((res) => res.json())
       .then((data) => setItem(data));
