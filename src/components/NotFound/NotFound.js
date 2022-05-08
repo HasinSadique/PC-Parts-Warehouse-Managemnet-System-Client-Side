@@ -2,10 +2,16 @@ import React from "react";
 
 const NotFound = () => {
   return (
-    <div>
+    <div className="text-white">
+      <h1 className="text-center text-4xl mt-10">
+        Opps, Page Not Found <br /> Error 404
+      </h1>
+      <small className="text-center block my-3">
+        We are sorry, but requested page cannot be found.
+      </small>
       <img
-        className=""
-        src="https://matob.web.id/random/wp-content/uploads/sites/2/2021/12/error-404.jpg"
+        className="rounded mx-auto my-10"
+        src="https://memegenerator.net/img/instances/400x/71427330.jpg"
         alt=""
       />
     </div>

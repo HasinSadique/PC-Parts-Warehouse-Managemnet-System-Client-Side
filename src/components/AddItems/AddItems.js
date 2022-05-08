@@ -26,6 +26,7 @@ const AddItems = () => {
   };
 
   const handleSubmit = async (event) => {
+    event.preventDefault();
     // console.log(itemName);
 
     const requestOptions = {
@@ -54,7 +55,7 @@ const AddItems = () => {
 
     console.log(response);
     event.target.reset();
-    // window.location.reload(true);
+    window.location.reload(true);
   };
 
   return (
