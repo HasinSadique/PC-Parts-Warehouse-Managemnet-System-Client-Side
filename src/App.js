@@ -11,6 +11,7 @@ import SignUp from "./components/SignUp/SignUp";
 import RequireAuth from "./components/RequireAuth/RequireAuth";
 import Blog from "./components/Blog/Blog";
 import ManageItem from "./components/ManageItem/ManageItem";
+import EditDetails from "./components/EditDetails/EditDetails";
 
 function App() {
   return (
@@ -28,6 +29,16 @@ function App() {
             </RequireAuth>
           }
         ></Route>
+
+        <Route
+          path="/edit-details/:itemId"
+          element={
+            <RequireAuth>
+              <EditDetails></EditDetails>
+            </RequireAuth>
+          }
+        ></Route>
+
         <Route path="/blog" element={<Blog></Blog>}></Route>
         <Route
           path="/add-items"

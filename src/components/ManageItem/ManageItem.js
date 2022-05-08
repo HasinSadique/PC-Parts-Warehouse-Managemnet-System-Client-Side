@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
+import InventoryList from ".././InventoryList/InventoryList";
 
-import { Link, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 const ManageItem = () => {
   const { itemId } = useParams();
   let isEmpty = false;
-
+  const navigate = useNavigate();
   const [item, setItem] = useState({});
-  if (item.quantity == 0) {
-    isEmpty = true;
-  }
+  const [stockQuantity, setStockQuantity] = useState(0);
+  const [response, setResponse] = useState({});
 
   useEffect(() => {
     const url = `https://warehouse-management-site.herokuapp.com/getItems/${itemId}`;
@@ -16,31 +16,177 @@ const ManageItem = () => {
       .then((res) => res.json())
       .then((data) => setItem(data));
   }, []);
+  useEffect(() => {
+    const url = `https://warehouse-management-site.herokuapp.com/getItems/${itemId}`;
+    fetch(url)
+      .then((res) => res.json())
+      .then((data) => setStockQuantity(data.quantity));
+  }, []);
 
+  const {
+    _id,
+    imageUrl,
+    quantity,
+    itemName,
+    supplierName,
+    itemPrice,
+    description,
+  } = item;
+
+  const handleDeliveredClick = async (event) => {
+    event.preventDefault();
+    const num = stockQuantity - 1;
+    setStockQuantity(num);
+
+    const requestOptions = {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        quantity: num,
+      }),
+    };
+
+    await fetch(`http://localhost:5000/updateStock/${itemId}`, requestOptions)
+      .then((res) => res.json())
+      .then((data) => setResponse(data))
+      .catch((err) => {
+        if (err) {
+          console.log("Error: ", response);
+        }
+      });
+  };
+
+  const handleDeleteItem = async (event) => {
+    event.preventDefault();
+
+    if (window.confirm("Are you sure You want to delete this item?")) {
+      console.log("Yes Delete.");
+
+      fetch(`http://localhost:5000/delete-item/${itemId}`, {
+        method: "DELETE",
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.Status == 200) {
+            //navigate to Inventory List
+            navigate(`/inventory`);
+          }
+        });
+    } else {
+      console.log("Don't Delete");
+    }
+  };
+
+  const handleReStockClick = async (event) => {
+    event.preventDefault();
+    let value = parseInt(
+      prompt("How many quantities do you want to re-stock?")
+    );
+    const num = stockQuantity + value;
+    setStockQuantity(num);
+
+    console.log("new stock: ", num);
+    // console.log(itemName);
+    const requestOptions = {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        quantity: num,
+      }),
+    };
+
+    await fetch(`http://localhost:5000/updateStock/${itemId}`, requestOptions)
+      .then((res) => res.json())
+      .then((data) => setResponse(data))
+      .catch((err) => {
+        if (err) {
+          console.log("Error: ", response);
+        }
+      });
+
+    // console.log("Result: ", response.result.acknowledged);
+  };
+
+  if (stockQuantity == 0) {
+    isEmpty = true;
+  }
   return (
     <div className="">
-      <div className="text-white lg:w-1/2 mx-auto bg-slate-700 lg:rounded-3xl lg:my-10 p-10">
+      {/* Toast Success */}
+      {response?.result?.acknowledged ? (
+        <div
+          id="toast-success"
+          class="flex items-center w-full max-w-xs p-4 mb-4 text-gray-500 bg-white rounded-lg shadow dark:text-gray-400 dark:bg-gray-800"
+          role="alert"
+        >
+          <div class="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-green-500 bg-green-100 rounded-lg dark:bg-green-800 dark:text-green-200">
+            <svg
+              class="w-5 h-5"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                clip-rule="evenodd"
+              ></path>
+            </svg>
+          </div>
+          <div class="ml-3 text-sm font-normal">Re-stock successfully.</div>
+          <button
+            type="button"
+            class="ml-auto -mx-1.5 -my-1.5 bg-white text-gray-400 
+            hover:text-gray-900 rounded-lg focus:ring-2 focus:ring-gray-300 
+            p-1.5 hover:bg-gray-100 inline-flex h-8 w-8 dark:text-gray-500
+            dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700"
+            data-dismiss-target="#toast-success"
+            aria-label="Close"
+          >
+            <span class="sr-only">Close</span>
+            <svg
+              class="w-5 h-5"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                clip-rule="evenodd"
+              ></path>
+            </svg>
+          </button>
+        </div>
+      ) : (
+        <div></div>
+      )}
+
+      <div
+        className="text-white lg:w-1/2 mx-auto 
+      bg-slate-700 lg:rounded-3xl lg:my-10 p-10"
+      >
         <div className="flex justify-center">
           <img
             className="lg:w-1/3 w-1/2 rounded-2xl lg:my-0 my-10 "
-            src={item.imageUrl}
+            src={imageUrl}
             alt=""
           />
           <div className=" ml-5">
-            <h1 className=" font-semibold text-xl">{item.itemName}</h1>
+            <h1 className=" font-semibold text-xl">{itemName}</h1>
             <small className="block mt-2">
               <span className="font-semibold text-base">Item ID: </span>
-              {item._id}
+              {_id}
             </small>
-            <small>supplier: {item.supplierName}</small>
+            <small>supplier: {supplierName}</small>
             <h1 className="mt-5 text-2xl">
-              Price: {item.itemPrice}
+              Price: {itemPrice}
               <span className="text-3xl">৳</span>
             </h1>
-            <div className="lg:flex justify-between mt-3">
+            <div className="grid lg:grid-cols-2 lg:gap-10 justify-between mt-3">
               <h1 className="text-xl lg:mb-0 mb-2">
-                Quantity: {item.quantity}{" "}
-                <span className="text-red-500">left</span>
+                {stockQuantity}{" "}
+                <span className="text-red-500"> items left in stock.</span>
                 <small
                   className={`${
                     isEmpty
@@ -51,7 +197,10 @@ const ManageItem = () => {
                   Out-of-Stock
                 </small>
               </h1>
-              <a className=" cursor-pointer hover:bg-orange-600 border-2 rounded-xl mr-5 my-auto px-3">
+              <a
+                onClick={handleReStockClick}
+                className=" text-center w-full cursor-pointer hover:bg-orange-600 border-2 rounded-xl mr-5 my-auto px-3"
+              >
                 Re-stock Item
               </a>
             </div>
@@ -60,10 +209,13 @@ const ManageItem = () => {
         <div className="mt-10 ">
           <big className="font-semibold">Description:</big>
           <br />
-          <p className="text-justify">{item.description}</p>
+          <p className="text-justify">{description}</p>
           {/* Inventory Item manage buttons */}
           <div className="flex justify-around mt-10 py-5">
-            <a className="cursor-pointer flex justify-center text-black font-bold bg-orange-400 hover:bg-orange-500 w-1/3 px-2 py-1 mb-3 rounded-xl">
+            <a
+              href={`/edit-details/${itemId}`}
+              className="cursor-pointer flex justify-center text-black font-bold bg-orange-400 hover:bg-orange-500 w-1/3 px-2 py-1 mb-3 rounded-xl"
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="h-5 w-5 mr-2"
@@ -79,7 +231,10 @@ const ManageItem = () => {
               </svg>
               Edit details
             </a>
-            <a className="cursor-pointer flex justify-center text-black font-bold bg-orange-400 hover:bg-orange-500 w-1/3 px-2 py-1 mb-3 rounded-xl">
+            <a
+              onClick={handleDeleteItem}
+              className="cursor-pointer flex justify-center text-black font-bold bg-orange-400 hover:bg-orange-500 w-1/3 px-2 py-1 mb-3 rounded-xl"
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="h-6 w-6 mr-2"
@@ -97,18 +252,21 @@ const ManageItem = () => {
               Delete Item
             </a>
           </div>
-          <a className="cursor-pointer flex justify-center text-black font-bold text-2xl bg-orange-400 hover:bg-orange-500 w-full px-2 py-1 mb-3 rounded-xl">
+          <a
+            onClick={handleDeliveredClick}
+            className="cursor-pointer flex justify-center text-black font-bold text-2xl bg-orange-400 hover:bg-orange-500 w-full px-2 py-1 mb-3 rounded-xl"
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-6 w-6 mr-3 my-auto"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
-              stroke-width="2"
+              strokeWidth="2"
             >
               <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
+                strokeLinecap="round"
+                strokeLinejoin="round"
                 d="M13 5l7 7-7 7M5 5l7 7-7 7"
               />
             </svg>
@@ -119,11 +277,11 @@ const ManageItem = () => {
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
-              stroke-width="2"
+              strokeWidth="2"
             >
               <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
+                strokeLinecap="round"
+                strokeLinejoin="round"
                 d="M13 5l7 7-7 7M5 5l7 7-7 7"
               />
             </svg>

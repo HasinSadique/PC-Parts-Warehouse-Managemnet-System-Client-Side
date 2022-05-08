@@ -27,6 +27,25 @@ const ItemCard = ({ item }) => {
     navigate(`/getItems/${id}`);
   };
 
+  const handleDeleteItem = async (event) => {
+    if (window.confirm("Are you sure You want to delete this item?")) {
+      console.log("Yes Delete.");
+
+      fetch(`http://localhost:5000/delete-item/${_id}`, {
+        method: "DELETE",
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.Status == 200) {
+            //navigate to Inventory List
+            window.location.reload(true);
+          }
+        });
+    } else {
+      console.log("Don't Delete");
+    }
+  };
+
   return (
     <div className="p-3 lg:flex bg-slate-200 rounded-3xl">
       <img
@@ -57,6 +76,7 @@ const ItemCard = ({ item }) => {
             Manage Stock
           </button>
           <button
+            onClick={handleDeleteItem}
             className={`${
               user
                 ? "bg-red-600 hover:bg-red-800 text-white font-bold rounded w-full mb-5 py-2 px-5"

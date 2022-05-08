@@ -8,22 +8,24 @@ const RequireAuth = ({ children }) => {
   const location = useLocation();
   if (loading) {
     return (
-      <div>
-        <p>Initialising User...</p>
+      <div className="text-center text-white">
+        <p> Initialising User... </p>{" "}
       </div>
     );
   }
   if (error) {
     return (
       <div>
-        <p>Error: {error}</p>
+        <p> Error: {error} </p>{" "}
       </div>
     );
   }
 
   if (!user) {
     return (
-      <Navigate to="/signin" state={{ from: location }} replace></Navigate>
+      <Navigate to="/signin" state={{ from: location }} replace>
+        {" "}
+      </Navigate>
     );
   } else {
     return children;
